@@ -35,7 +35,8 @@ socketId: {
 
 })
 userSchema.methods.generateAuthtoken = function () {
-    const token = jwt.sign({_id: this._id},process.env.JWT_SECRET)
+
+    const token = jwt.sign({_id: this._id},process.env.JWT_SECRET, {expireIn: '1d'});
     return token;
 };
 userSchema.methods.comparePassword = async function (password) {

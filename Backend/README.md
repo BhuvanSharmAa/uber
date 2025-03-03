@@ -117,3 +117,87 @@ Endpoint for authenticating existing users.
 ### Security Features
 - Passwords are compared using bcrypt
 - JWT token is generated upon successful authentication
+
+## Get User Profile
+Endpoint for retrieving the authenticated user's profile.
+
+### Endpoint
+`GET /users/profile`
+
+### Headers Required
+```
+Authorization: Bearer <jwt_token>
+```
+
+### Success Response
+- **Status Code**: 200 (OK)
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "_id": "user_id"
+}
+```
+
+### Error Responses
+- **Status Code**: 401 (Unauthorized)
+```json
+{
+  "error": "Unauthorized - No token provided"
+}
+```
+```json
+{
+  "error": "Unauthorized - Invalid token"
+}
+```
+```json
+{
+  "error": "Unauthorized - User not found"
+}
+```
+
+## Logout User
+Endpoint for logging out the authenticated user.
+
+### Endpoint
+`GET /users/logout`
+
+### Headers Required
+```
+Authorization: Bearer <jwt_token>
+```
+
+### Success Response
+- **Status Code**: 200 (OK)
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+### Error Responses
+- **Status Code**: 401 (Unauthorized)
+```json
+{
+  "error": "Unauthorized - No token provided"
+}
+```
+```json
+{
+  "error": "Unauthorized - Token blacklisted"
+}
+```
+```json
+{
+  "error": "Unauthorized - Invalid token"
+}
+```
+
+### Security Features
+- Token is blacklisted upon logout
+- Cookie is cleared if present
+- Requires valid JWT token for authentication
